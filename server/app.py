@@ -30,7 +30,7 @@ def get_episodes():
     response = [episode.to_dict() for episode in episodes]
     return make_response(jsonify(response), 200)
 
-# GET /episodes/<id>
+# GET /episodes/<int:id>
 @app.route('/episodes/<int:id>', methods=['GET'])
 def get_episode(id):
     episode = Episode.query.filter_by(id=id).first()
@@ -39,7 +39,14 @@ def get_episode(id):
     else:
         return make_response(jsonify({"error": "Episode not found"}), 404)
 
-# GET /appearances  ✅ This was missing!
+#  GET /guests
+@app.route('/guests', methods=['GET'])
+def get_guests():
+    guests = Guest.query.all()
+    response = [guest.to_dict() for guest in guests]
+    return make_response(jsonify(response), 200)
+
+# GET /appearances
 @app.route('/appearances', methods=['GET'])
 def get_appearances():
     appearances = Appearance.query.all()
